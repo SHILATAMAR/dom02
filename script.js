@@ -11,10 +11,8 @@ const errorElement = document.querySelector("#error");
 const filtersContainer = document.querySelector("#filters");
 const clearCompletedBtn = document.getElementById("clear-done");
 
-// משתנה ששומר את הסינון הנוכחי
 let currentFilter = "all";
 
-// פונקציה שמעדכנת את מספר המשימות שנותרו לביצוע
 function updateLeftCount() {
     const activeTasks = document.querySelectorAll("#task-list li:not(.done)");
     const leftElement = document.querySelector("#left");
@@ -23,20 +21,18 @@ function updateLeftCount() {
     }
 }
 
-// שלב 7: פונקציה לעדכון מצב הודעת רשימה ריקה
 function updateEmptyState() {
     const emptyElement = document.querySelector("#empty");
     if (!emptyElement) return;
 
     const items = taskList.querySelectorAll("li");
     if (items.length === 0) {
-        emptyElement.hidden = false; // מציג את ההודעה כשאין משימות
+        emptyElement.hidden = false;
     } else {
-        emptyElement.hidden = true;  // מוסתר כשיש לפחות משימה אחת
+        emptyElement.hidden = true;
     }
 }
 
-// שלב 5: פונקציה להחלת הסינון על המשימות
 function applyFilter() {
     const items = taskList.querySelectorAll("li");
     items.forEach(li => {
@@ -52,7 +48,6 @@ function applyFilter() {
     });
 }
 
-// שלב 5: מאזין ללחיצה על כפתורי הסינון
 if (filtersContainer) {
     filtersContainer.addEventListener("click", (e) => {
         const button = e.target.closest("button[data-filter]");
@@ -67,18 +62,16 @@ if (filtersContainer) {
     });
 }
 
-// שלב 6: כפתור ניקוי משימות שבוצעו
 if (clearCompletedBtn) {
     clearCompletedBtn.addEventListener("click", () => {
         const completedTasks = document.querySelectorAll("#task-list li.done");
         completedTasks.forEach(li => li.remove());
         updateLeftCount();
         applyFilter();
-        updateEmptyState(); // עדכון מצב רשימה ריקה
+        updateEmptyState();
     });
 }
 
-// מאזין יחיד לכל הרשימה (Event Delegation) למחיקה וסימון
 taskList.addEventListener("click", (e) => {
     const deleteButton = e.target.closest(".delete");
     if (deleteButton) {
@@ -86,7 +79,7 @@ taskList.addEventListener("click", (e) => {
         if (li) {
             li.remove();
             updateLeftCount();
-            updateEmptyState(); // עדכון מצב רשימה ריקה
+            updateEmptyState();
         }
         return;
     }
@@ -99,7 +92,6 @@ taskList.addEventListener("click", (e) => {
     }
 });
 
-// הוספת משימה
 taskForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -132,17 +124,15 @@ taskForm.addEventListener("submit", (e) => {
 
     updateLeftCount();
     applyFilter();
-    updateEmptyState(); // עדכון מצב רשימה ריקה בהוספה
+    updateEmptyState();
 
     taskInput.value = "";
     taskInput.focus();
 });
 
-// הפעלה ראשונית של מצב רשימה ריקה בטעינת העמוד
 updateEmptyState();
 
 // Step 3: delete with the x button (one listener on the ul - event delegation)
-// מאזין אחד בלבד על כל הרשימה (Event Delegation)
 
 // Step 4: "tasks left" counter
 
